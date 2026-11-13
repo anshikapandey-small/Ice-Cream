@@ -257,43 +257,61 @@ a { color: inherit; }
 
 /* ---------- Hero banner ---------- */
 /* ---------- Hero banner ---------- */
+/* ---------- Hero banner (Full Screen) ---------- */
 .hero {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100vh;
-  height: 100dvh; /* accounts for mobile browser bars */
+  height: 100dvh; /* Accounts for mobile browser address bars dynamically */
+  overflow: hidden;
 }
 
 .hero-banner {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  margin: 0 auto;
   line-height: 0;
 }
 
 .hero-banner img {
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* fills the entire screen without stretching */
-  object-position: center; /* keeps the main subject centered */
+  object-fit: cover;      /* Fills the screen completely without stretching */
+  object-position: center center;
   display: block;
 }
-/* Clickable area exactly over the button in the image (measured from a 1816x866 banner) */
+
+/* Clickable area perfectly matched over the "Explore Menu" button in your image */
 .hero-cta {
-  position: absolute; left: 9.47%; top: 80.83%; width: 20.1%; height: 9.8%;
-  border-radius: 999px; cursor: pointer;
+  position: absolute;
+  left: 9.47%;
+  top: 80.83%;
+  width: 20.1%;
+  height: 9.8%;
+  border-radius: 999px;
+  cursor: pointer;
   transition: box-shadow .25s ease, transform .25s ease;
-}
-.hero-cta:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 28px rgba(126, 15, 58, .4); }
-.hero-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-
-@media (max-width: 640px) {
-  .cart-btn { margin-left: 14px; margin-right: 6px; }
-  .logo-text { font-size: .92rem; }
+  z-index: 2;
 }
 
+.hero-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 28px rgba(126, 15, 58, .4);
+}
+
+.hero-cta:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Mobile responsiveness: Keeps the text & button side in focus on tall/narrow screens */
+@media (max-width: 768px) {
+  .hero-banner img {
+    object-position: 28% center; 
+  }
+}
 /* ==========================================================
    Language picker + Hindi / Marathi fonts
    ========================================================== */
