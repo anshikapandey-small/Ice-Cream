@@ -2,7 +2,7 @@
    Berry Bliss — script.js
    1. Full menu data (all 8 sections) + tabbed rendering
    2. Navbar, mobile menu, reveal-on-scroll
-   (hero is now a static sundae illustration)
+   (hero is now a banner image)
    ========================================================== */
 "use strict";
 
@@ -169,19 +169,3 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
 document.getElementById("year").textContent = new Date().getFullYear();
-
-/* ---------- 3. OPTIONAL REAL SUNDAE PHOTO ----------
-   Save a transparent PNG as "sundae.png" next to index.html and it
-   automatically replaces the drawn sundae. No file = drawn sundae stays. */
-(function () {
-  const box = document.querySelector(".hero-visual");
-  if (!box) return;
-  const img = new Image();
-  img.onload = () => {
-    img.className = "sundae sundae-photo";
-    img.alt = "Ice cream sundae";
-    box.innerHTML = "";
-    box.appendChild(img);
-  };
-  img.src = "sundae.png";
-})();
