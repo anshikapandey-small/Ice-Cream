@@ -1,109 +1,146 @@
 /* ==========================================================
    Berry Bliss — script.js
-   1. Product catalogue (10 items, 3 categories) + SVG art
-   2. Navbar, mobile menu, reveal-on-scroll animations
+   1. Full menu data (all 8 sections) + tabbed rendering
+   2. Navbar, mobile menu, reveal-on-scroll
    3. Three.js hero — rotating ice cream cone (GLB model,
       procedural cup as fallback)
    ========================================================== */
 "use strict";
 
-/* ---------- 1. PRODUCT CATALOGUE ---------- */
+/* ---------- 1. MENU DATA ----------
+   Item format:  [name, half, full]   (two-price sections)
+                 [name, price]        (single-price sections)
+   Use null for "not available" (shown as —).
+   To change a price or add an item, just edit this list. */
 
-const PRODUCTS = [
-  // Classic Favourites
-  { name: "Belgian Chocolate", desc: "Rich and creamy Belgian chocolate ice cream.", cat: "Classic", grid: "grid-classic",
-    scoops: ["#7B4B2A", "#5C3620", "#8A5A33"], bg: "#FFE9DE", top: "#5C3620", drizzle: "#F6A6B5" },
-  { name: "Madagascar Vanilla", desc: "Smooth vanilla ice cream with a delicate aroma.", cat: "Classic", grid: "grid-classic",
-    scoops: ["#FFF3E0", "#F7E8CE", "#FFEFD8"], bg: "#FCE4EC", top: "#E85D75", drizzle: "#F6A6B5" },
-  { name: "Strawberry Swirl", desc: "Fresh strawberry flavour with sweet strawberry swirls.", cat: "Classic", grid: "grid-classic",
-    scoops: ["#F6A6B5", "#F9C2CE", "#F6A6B5"], bg: "#FFF9F5", top: "#E85D75", drizzle: "#fff" },
-  { name: "Butterscotch Crunch", desc: "Creamy butterscotch with crunchy caramel pieces.", cat: "Classic", grid: "grid-classic",
-    scoops: ["#EBB567", "#E8A852", "#F2C078"], bg: "#FCE4EC", top: "#C77F35", drizzle: "#8A5A33" },
-  // Fruity Delights
-  { name: "Mango Magic", desc: "Sweet and refreshing Alphonso mango ice cream.", cat: "Fruity", grid: "grid-fruity",
-    scoops: ["#FFB65C", "#FF9F3D", "#FFC97E"], bg: "#FFF9F5", top: "#E85D75", drizzle: "#fff" },
-  { name: "Blueberry Bliss", desc: "Blueberry ice cream with fruity berry swirls.", cat: "Fruity", grid: "grid-fruity",
-    scoops: ["#8E7CC3", "#7A68B0", "#A79BD4"], bg: "#FCE4EC", top: "#5B4A9E", drizzle: "#FFD6C9" },
-  { name: "Black Currant", desc: "Tangy black currant ice cream with a rich fruity flavour.", cat: "Fruity", grid: "grid-fruity",
-    scoops: ["#5B2A6E", "#4A2159", "#6E3A82"], bg: "#FFF9F5", top: "#E85D75", drizzle: "#F6A6B5" },
-  // Signature Specials
-  { name: "Cookies & Cream", desc: "Vanilla ice cream loaded with chocolate cookie chunks.", cat: "Signature", grid: "grid-signature",
-    scoops: ["#F5EFE6", "#EBE2D4", "#F5EFE6"], bg: "#FCE4EC", top: "#4A342C", drizzle: "#4A342C", chips: true },
-  { name: "Red Velvet Dream", desc: "Creamy red velvet ice cream with cake crumbs.", cat: "Signature", grid: "grid-signature",
-    scoops: ["#C13B50", "#D95B6A", "#B02F44"], bg: "#FFF9F5", top: "#FFF3E0", drizzle: "#fff" },
-  { name: "Strawberry Cheesecake", desc: "Strawberry ice cream with cheesecake-inspired swirls.", cat: "Signature", grid: "grid-signature",
-    scoops: ["#F6A6B5", "#FFF3E0", "#F9C2CE"], bg: "#FCE4EC", top: "#E85D75", drizzle: "#FFD6C9" }
+const MENU = [
+  {
+    id: "icecream", tab: "Ice Cream", title: "Ice Cream", cols: ["Half", "Full"],
+    items: [
+      ["Mix Cone", 25, 35], ["Chocolate", 20, 30], ["Mango", 20, 30], ["Strawberry", 20, 30],
+      ["Butterscotch", 25, 40], ["Kaju Anjeer", 25, 40, "Cashew & Fig"],
+      ["Kesar Pista", 25, 40, "Saffron & Pistachio"], ["Kaju Draksh", 25, 40, "Cashew & Raisins"],
+      ["Rajbhog", 25, 40], ["Chhappan Bhog", 25, 40], ["Green Pista", 25, 40],
+      ["Badam Pista", 25, 40, "Almond & Pistachio"], ["Shahi Gulab", 25, 40, "Royal Rose"],
+      ["Sitaphal", 30, 50, "Custard Apple"], ["American Dry Fruit", 30, 50], ["Sugar-Free", 40, 50]
+    ]
+  },
+  {
+    id: "kulfi", tab: "Matka Kulfi", title: "Special Rajasthani Matka Kulfi", cols: ["Price"],
+    items: [
+      ["Kesar Kulfi", 25], ["Pista Kulfi", 25], ["Rajbhog Kulfi", 25],
+      ["Malai Kulfi", 20], ["Mango Kulfi", 20], ["Rabdi Kulfi", 30]
+    ]
+  },
+  {
+    id: "falooda", tab: "Falooda Shakes", title: "Falooda Shake", cols: ["Half", "Full"],
+    items: [
+      ["Fruit Salad", 30, 50], ["Rose Falooda", 30, 50], ["Kesar Falooda", 30, 50],
+      ["Kaju Cold Coffee", 40, 60], ["Pineapple Falooda", 40, 60], ["Mango Falooda", 40, 60],
+      ["Anjeer Falooda", 40, 60, "Fig"], ["Strawberry Falooda", 40, 60], ["Chocolate Falooda", 40, 60],
+      ["Special Fruit Salad", 40, 60], ["Badam Shake", 40, 60, "Almond"],
+      ["Kaju Anjeer Shake", 50, 80], ["Mix Fruit Falooda", 50, 80], ["Sitaphal Falooda", 50, 80],
+      ["Butterscotch Falooda", 50, 80], ["Pista Falooda", 50, 80], ["Falooda Ice Cream", 50, 80],
+      ["Kulfi Falooda", 70, 120],
+      ["Krishna Special Falooda", 80, 150], ["Rajbhog Falooda", 80, 150], ["Special Mawa Falooda", 80, 150]
+    ]
+  },
+  {
+    id: "rabdi", tab: "Rabdi Falooda", title: "Special Rabdi Falooda", cols: ["Half", "Full"],
+    items: [
+      ["Special Rabdi Rose Falooda", 60, 100], ["Special Rabdi Kesar Falooda", 60, 100],
+      ["Special Rabdi Pista Falooda", 60, 100], ["Special Rabdi Sitaphal Falooda", 60, 100],
+      ["Special Rabdi Butterscotch Falooda", 60, 100], ["Special Rabdi Mango Falooda", 60, 100],
+      ["Special Rabdi Falooda", 60, 100], ["Matka Special Rabdi", 60, null],
+      ["Special Malai Rabdi", 60, 100], ["Matka Rabdi Kulfi", 70, null]
+    ]
+  },
+  {
+    id: "milkshake", tab: "Milkshakes", title: "Milkshakes", cols: ["Full"],
+    items: [
+      ["Chocolate Milkshake", 80], ["Butterscotch Milkshake", 80], ["Rose Milkshake", 80],
+      ["Pista Milkshake", 80], ["Strawberry Milkshake", 80], ["Pineapple Milkshake", 80],
+      ["Kesar Milkshake", 80], ["Blackcurrant Milkshake", 80]
+    ],
+    extra: {
+      title: "Milkshake — Per Litre", cols: ["Price"],
+      items: [["Fruit Salad", 180], ["Kaju Anjeer", 220, "Cashew & Fig"], ["Kaju Cold Cocoa", 220], ["Badam Shake", 220, "Almond"]]
+    }
+  },
+  {
+    id: "family", tab: "Family Packs", title: "Family Packs", cols: ["Price"],
+    items: [["250 gm", 80], ["500 gm", 150], ["1000 gm (1 kg)", 300]],
+    extra: {
+      title: "Special Items", cols: ["Price"],
+      items: [["Krishna Special Mix Ice Cream", 70], ["Krishna Special Mix Rabdi Ice Cream", 90]]
+    }
+  }
 ];
 
-/* Deterministic pseudo-random so every render looks the same */
-function seededRand(seed) {
-  let s = seed;
-  return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
-}
+const HIGHLIGHTS = [
+  { name: "Matka Kulfi", note: "from ₹20", go: "kulfi" },
+  { name: "Rabdi Falooda", note: "from ₹60", go: "rabdi" },
+  { name: "Ice Cream", note: "from ₹20", go: "icecream" },
+  { name: "Family Packs", note: "from ₹80", go: "family" }
+];
 
-/* Hand-built SVG "photograph" for each flavour — consistent 1:1 dimensions */
-function scoopSVG(p, index) {
-  const rnd = seededRand(97 + index * 31);
-  const [c1, c2, c3] = p.scoops;
-  const sprinkles = [];
-  const sprinkleCols = ["#E85D75", "#FFD6C9", "#fff", "#F6A6B5", "#C77F35"];
-  for (let i = 0; i < 12; i++) {
-    const x = 120 + rnd() * 240, y = 150 + rnd() * 130;
-    const rot = Math.floor(rnd() * 180);
-    const col = sprinkleCols[Math.floor(rnd() * sprinkleCols.length)];
-    sprinkles.push(`<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="14" height="4.5" rx="2.2" fill="${col}" opacity="0.9" transform="rotate(${rot} ${x.toFixed(0)} ${y.toFixed(0)})"/>`);
-  }
-  const chips = p.chips
-    ? `<circle cx="175" cy="300" r="9" fill="#4A342C"/><circle cx="270" cy="255" r="8" fill="#4A342C"/><circle cx="330" cy="305" r="9" fill="#4A342C"/><circle cx="220" cy="330" r="7" fill="#4A342C"/>`
-    : "";
+const price = (v) => (v == null ? `<span class="na">—</span>` : `₹${v}`);
+
+function tableHTML(title, cols, items) {
+  const head = cols.map((c) => `<th scope="col" class="num">${c} (₹)</th>`).join("");
+  const rows = items.map((it) => {
+    const [name, ...rest] = it;
+    const prices = rest.filter((v) => typeof v === "number" || v === null);
+    const note = rest.find((v) => typeof v === "string");
+    const cells = prices.map((v) => `<td class="num">${price(v)}</td>`).join("");
+    return `<tr><th scope="row"><span class="item-name">${name}</span>${note ? `<small>${note}</small>` : ""}</th>${cells}</tr>`;
+  }).join("");
   return `
-  <svg viewBox="0 0 480 480" role="img" aria-label="${p.name} ice cream" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="g${index}" cx="50%" cy="38%" r="75%">
-        <stop offset="0%" stop-color="${p.bg}"/><stop offset="100%" stop-color="#F6A6B5" stop-opacity="0.45"/>
-      </radialGradient>
-    </defs>
-    <rect width="480" height="480" fill="url(#g${index})"/>
-    <circle cx="240" cy="300" r="150" fill="#fff" opacity="0.35"/>
-    <!-- cup -->
-    <path d="M148 320h184l-24 100a16 16 0 0 1-16 12H188a16 16 0 0 1-16-12z" fill="#F6A6B5"/>
-    <path d="M148 320h184l-5 22H153z" fill="#E85D75"/>
-    <path d="M188 345c30 14 74 14 104 0" stroke="#FFF9F5" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.85"/>
-    <!-- scoops -->
-    <circle cx="172" cy="300" r="56" fill="${c1}"/>
-    <circle cx="308" cy="300" r="56" fill="${c3}"/>
-    <circle cx="240" cy="262" r="64" fill="${c2}"/>
-    <ellipse cx="216" cy="236" rx="18" ry="11" fill="#fff" opacity="0.45"/>
-    ${sprinkles.join("")}
-    ${chips}
-    <!-- drizzle -->
-    <path d="M188 268c20 16 44-12 64 4s44-12 60 6" stroke="${p.drizzle}" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.95"/>
-    <!-- strawberry on top -->
-    <path d="M240 176c-3-8-9-12-16-13 2 7 8 12 16 13zM240 176c3-8 9-12 16-13-2 7-8 12-16 13z" fill="#7FB069"/>
-    <path d="M240 180c-11 0-19 8-19 18 0 11 10 22 19 22s19-11 19-22c0-10-8-18-19-18z" fill="#E85D75"/>
-    <circle cx="234" cy="194" r="1.8" fill="#FFD6C9"/><circle cx="246" cy="190" r="1.8" fill="#FFD6C9"/><circle cx="240" cy="203" r="1.8" fill="#FFD6C9"/>
-  </svg>`;
+    <div class="menu-block">
+      <h3 class="menu-title">${title}</h3>
+      <div class="table-wrap">
+        <table class="menu-table">
+          <thead><tr><th scope="col">Item</th>${head}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
 }
 
-function renderProducts() {
-  const grids = {};
-  PRODUCTS.forEach((p, i) => {
-    const card = document.createElement("article");
-    card.className = "card reveal";
-    card.style.transitionDelay = `${(i % 4) * 90}ms`;
-    card.innerHTML = `
-      <div class="card-img">
-        ${scoopSVG(p, i)}
-        <span class="card-badge">${p.cat}</span>
-      </div>
-      <div class="card-body">
-        <h4>${p.name}</h4>
-        <p>${p.desc}</p>
-      </div>`;
-    (grids[p.grid] ||= document.getElementById(p.grid)).appendChild(card);
+const tabsEl = document.getElementById("tabs");
+const panelEl = document.getElementById("menuPanel");
+const highlightsEl = document.getElementById("highlights");
+
+function showCategory(id, scroll) {
+  const cat = MENU.find((c) => c.id === id) || MENU[0];
+  tabsEl.querySelectorAll(".tab").forEach((b) => {
+    const on = b.dataset.id === cat.id;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-selected", String(on));
   });
+  panelEl.innerHTML =
+    tableHTML(cat.title, cat.cols, cat.items) +
+    (cat.extra ? tableHTML(cat.extra.title, cat.extra.cols, cat.extra.items) : "");
+  panelEl.classList.remove("swap"); void panelEl.offsetWidth; panelEl.classList.add("swap");
+  if (scroll) tabsEl.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-renderProducts();
+
+function renderMenu() {
+  tabsEl.innerHTML = MENU.map((c) =>
+    `<button class="tab" role="tab" data-id="${c.id}" aria-selected="false">${c.tab}</button>`).join("");
+  tabsEl.addEventListener("click", (e) => {
+    const b = e.target.closest(".tab");
+    if (b) showCategory(b.dataset.id, false);
+  });
+  highlightsEl.innerHTML = HIGHLIGHTS.map((h) =>
+    `<button class="hl-card" data-go="${h.go}"><strong>${h.name}</strong><span>${h.note}</span></button>`).join("");
+  highlightsEl.addEventListener("click", (e) => {
+    const b = e.target.closest(".hl-card");
+    if (b) showCategory(b.dataset.go, true);
+  });
+  showCategory(MENU[0].id, false);
+}
+renderMenu();
 
 /* ---------- 2. NAVBAR + SCROLL REVEALS ---------- */
 
@@ -152,7 +189,6 @@ document.getElementById("year").textContent = new Date().getFullYear();
   renderer.outputEncoding = THREE.sRGBEncoding;
   wrap.appendChild(renderer.domElement);
 
-  /* Lights */
   scene.add(new THREE.AmbientLight(0xfff0f3, 0.75));
   const key = new THREE.DirectionalLight(0xffffff, 1.1);
   key.position.set(3.5, 6, 4);
@@ -167,7 +203,6 @@ document.getElementById("year").textContent = new Date().getFullYear();
   rim.position.set(-2, 4, -4);
   scene.add(rim);
 
-  /* Ground shadow catcher */
   const ground = new THREE.Mesh(
     new THREE.CircleGeometry(2.4, 48),
     new THREE.ShadowMaterial({ opacity: 0.22 })
@@ -176,32 +211,27 @@ document.getElementById("year").textContent = new Date().getFullYear();
   ground.receiveShadow = true;
   scene.add(ground);
 
-  /* Spinning rig: model sits inside, rotation/float applied to the rig */
   const rig = new THREE.Group();
   scene.add(rig);
 
-  /* --- Load the provided GLB model (textures are embedded) --- */
-  const MODEL_URL = "ice-cream-cone.glb";   // must sit next to index.html with exactly this name
+  /* GLB model — must sit next to index.html with exactly this name */
+  const MODEL_URL = "ice-cream-cone.glb";
   if (typeof THREE.GLTFLoader !== "function") {
-    console.warn("GLTFLoader script didn't load (check the <script> tag / network); using procedural cup.");
+    console.warn("GLTFLoader didn't load; using procedural cup.");
     rig.add(buildProceduralCup());
   } else new THREE.GLTFLoader().load(
     MODEL_URL,
     (gltf) => {
       const model = gltf.scene;
-      /* The exported mesh leans ~23° (tip toward -Z, slightly +X).
-         Rotate the cone's real axis onto +Y so it stands upright and
-         spins around its own centre instead of wobbling. */
+      /* Straighten the leaning export so it spins around its own axis */
       model.quaternion.setFromUnitVectors(
         new THREE.Vector3(0.06, 1, 0.43).normalize(),
         new THREE.Vector3(0, 1, 0)
       );
-      /* Normalize: center and scale to ~2.6 units tall, base at y = 0 */
       const box = new THREE.Box3().setFromObject(model);
       const size = new THREE.Vector3();
       box.getSize(size);
-      const scale = 2.6 / size.y;
-      model.scale.setScalar(scale);
+      model.scale.setScalar(2.6 / size.y);
       box.setFromObject(model);
       const center = new THREE.Vector3();
       box.getCenter(center);
@@ -218,69 +248,44 @@ document.getElementById("year").textContent = new Date().getFullYear();
         }
       });
       rig.add(model);
-      /* Offset camera target to model centre */
       camera.lookAt(0, 1.15, 0);
     },
     undefined,
     (err) => {
-      /* For network errors `err` is a ProgressEvent; read the real status from it */
-      const status = err && err.target ? `${err.target.status} ${err.target.statusText}` : "";
-      console.warn(`GLB failed to load from "${MODEL_URL}" ${status} — building procedural fallback.`, err);
+      console.warn(`GLB failed to load from "${MODEL_URL}" — using procedural fallback.`, err);
       rig.add(buildProceduralCup());
     }
   );
 
-  /* --- Procedural fallback cup (only used if the GLB can't load) --- */
   function buildProceduralCup() {
     const g = new THREE.Group();
-    const cupPts = [
-      new THREE.Vector2(0.30, 0.02), new THREE.Vector2(0.38, 0.06),
-      new THREE.Vector2(0.42, 0.18), new THREE.Vector2(0.50, 0.55),
-      new THREE.Vector2(0.58, 0.98), new THREE.Vector2(0.60, 1.04)
-    ];
-    const cupMesh = new THREE.Mesh(
-      new THREE.LatheGeometry(cupPts, 64),
+    const pts = [[0.30,0.02],[0.38,0.06],[0.42,0.18],[0.50,0.55],[0.58,0.98],[0.60,1.04]]
+      .map(([x, y]) => new THREE.Vector2(x, y));
+    const cup = new THREE.Mesh(
+      new THREE.LatheGeometry(pts, 64),
       new THREE.MeshPhysicalMaterial({
-        color: 0xF6A6B5, transparent: true, opacity: 0.38,
-        roughness: 0.12, metalness: 0.05, side: THREE.DoubleSide,
-        clearcoat: 0.6, clearcoatRoughness: 0.25
+        color: 0xF6A6B5, transparent: true, opacity: 0.38, roughness: 0.12,
+        metalness: 0.05, side: THREE.DoubleSide, clearcoat: 0.6, clearcoatRoughness: 0.25
       })
     );
-    cupMesh.castShadow = true;
-    g.add(cupMesh);
-
-    function scoop(color, x, y, z, r) {
-      const geo = new THREE.SphereGeometry(r, 48, 48);
-      const pos = geo.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        const vx = pos.getX(i), vy = pos.getY(i), vz = pos.getZ(i);
-        const n = 1 + 0.03 * Math.sin(vx * 6.1) * Math.cos(vy * 5.3 + vz * 4.7);
-        pos.setXYZ(i, vx * n, vy * n, vz * n);
-      }
-      geo.computeVertexNormals();
-      const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 0.55 }));
+    cup.castShadow = true;
+    g.add(cup);
+    const scoop = (color, x, y, z, r) => {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(r, 48, 48),
+        new THREE.MeshStandardMaterial({ color, roughness: 0.55 }));
       m.position.set(x, y, z);
       m.castShadow = true;
       return m;
-    }
+    };
     g.add(scoop(0xF6A6B5, 0, 1.32, 0.02, 0.36));
     g.add(scoop(0xFFF3E0, -0.33, 1.16, 0.06, 0.33));
     g.add(scoop(0x6B4226, 0.33, 1.16, -0.04, 0.33));
-
-    const berryTop = new THREE.Mesh(
-      new THREE.SphereGeometry(0.11, 24, 24),
-      new THREE.MeshStandardMaterial({ color: 0xE85D75, roughness: 0.4 })
-    );
-    berryTop.position.set(0, 1.76, 0.02);
-    berryTop.castShadow = true;
-    g.add(berryTop);
+    g.add(scoop(0xE85D75, 0, 1.76, 0.02, 0.11));
     return g;
   }
 
-  /* Interaction state */
   let mouseX = 0, mouseY = 0;
   const heroCup = document.getElementById("heroCup");
-
   if (!reduceMotion) {
     window.addEventListener("mousemove", (e) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -301,18 +306,16 @@ document.getElementById("year").textContent = new Date().getFullYear();
   function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
-
     if (!reduceMotion) {
-      rig.rotation.y = t * 0.35;                                   // slow continuous spin
-      rig.position.y = Math.sin(t * 1.1) * 0.08 + 0.05;            // gentle float
-      rig.rotation.x += (mouseY * 0.10 - rig.rotation.x) * 0.05;   // mouse parallax
-      rig.rotation.y += mouseX * 0.003;                            // subtle extra turn
-      /* scroll parallax */
+      rig.rotation.y = t * 0.35;
+      rig.position.y = Math.sin(t * 1.1) * 0.08 + 0.05;
+      rig.rotation.x += (mouseY * 0.10 - rig.rotation.x) * 0.05;
+      rig.rotation.y += mouseX * 0.003;
       const rect = heroCup.getBoundingClientRect();
       const offset = Math.min(Math.max(rect.top / window.innerHeight, -1), 1);
       wrap.style.transform = `translateY(${offset * 40}px)`;
     } else {
-      rig.rotation.y = 0.6;                                        // pleasant static angle
+      rig.rotation.y = 0.6;
       rig.position.y = 0.05;
     }
     renderer.render(scene, camera);
