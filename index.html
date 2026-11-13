@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Berry Bliss Ice Cream Co. — A Little Scoop of Happiness</title>
-  <meta name="description" content="Berry Bliss Ice Cream Co. — handcrafted ice cream in the Strawberry Dream palette. Find your perfect scoop." />
+  <meta name="description" content="Berry Bliss Ice Cream Co. — ice cream, matka kulfi, falooda, rabdi, milkshakes and family packs. See our full menu." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -14,7 +14,7 @@
 
   <!-- Floating decorative elements -->
   <div class="decor" aria-hidden="true">
-    <svg class="decor-item d1 float-a" viewBox="0 0 64 64"><path d="M32 14c-9 0-16 7-16 16 0 10 9 20 16 20s16-10 16-20c0-9-7-16-16-16z" fill="#F6A6B5"/><path d="M32 14c-2-4-6-6-10-6 1 4 5 7 10 6zM32 14c2-4 6-6 10-6-1 4-5 7-10 6z" fill="#7FB069"/><circle cx="26" cy="28" r="1.6" fill="#E85D75"/><circle cx="36" cy="26" r="1.6" fill="#E85D75"/><circle cx="31" cy="35" r="1.6" fill="#E85D75"/><circle cx="38" cy="36" r="1.4" fill="#E85D75"/><circle cx="25" cy="37" r="1.4" fill="#E85D75"/></svg>
+    <svg class="decor-item d1 float-a" viewBox="0 0 64 64"><path d="M32 14c-9 0-16 7-16 16 0 10 9 20 16 20s16-10 16-20c0-9-7-16-16-16z" fill="#F6A6B5"/><path d="M32 14c-2-4-6-6-10-6 1 4 5 7 10 6zM32 14c2-4 6-6 10-6-1 4-5 7-10 6z" fill="#7FB069"/><circle cx="26" cy="28" r="1.6" fill="#E85D75"/><circle cx="36" cy="26" r="1.6" fill="#E85D75"/><circle cx="31" cy="35" r="1.6" fill="#E85D75"/></svg>
     <svg class="decor-item d2 float-b" viewBox="0 0 64 64"><path d="M20 30h24l-5 26a4 4 0 0 1-4 3H29a4 4 0 0 1-4-3z" fill="#FFD6C9"/><circle cx="32" cy="22" r="14" fill="#FFF3E4"/><circle cx="26" cy="17" r="2" fill="#E85D75"/><circle cx="36" cy="24" r="2" fill="#F6A6B5"/></svg>
     <svg class="decor-item d3 float-c" viewBox="0 0 64 64"><path d="M32 14c-9 0-16 7-16 16 0 10 9 20 16 20s16-10 16-20c0-9-7-16-16-16z" fill="#F6A6B5"/><path d="M32 14c-2-4-6-6-10-6 1 4 5 7 10 6z" fill="#7FB069"/><circle cx="28" cy="27" r="1.6" fill="#E85D75"/><circle cx="36" cy="33" r="1.6" fill="#E85D75"/></svg>
     <svg class="decor-item d4 float-a" viewBox="0 0 64 64"><path d="M22 28h20l-4 24a4 4 0 0 1-4 3H30a4 4 0 0 1-4-3z" fill="#F6A6B5"/><circle cx="32" cy="20" r="12" fill="#E85D75"/></svg>
@@ -32,7 +32,7 @@
       </button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">Home</a></li>
-        <li><a href="#flavours">Our Flavours</a></li>
+        <li><a href="#menu">Our Menu</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -45,9 +45,9 @@
       <div class="hero-content">
         <p class="hero-label reveal">MADE WITH LOVE, SERVED WITH HAPPINESS</p>
         <h1 class="hero-title reveal">A Little Scoop of <span class="hl">Happiness.</span></h1>
-        <p class="hero-sub reveal">Discover your favourite flavours, crafted to make every moment sweeter.</p>
+        <p class="hero-sub reveal">Ice cream, matka kulfi, falooda and shakes — crafted to make every moment sweeter.</p>
         <div class="hero-actions reveal">
-          <a href="#flavours" class="btn-primary">Explore Our Flavours</a>
+          <a href="#menu" class="btn-primary">See Our Menu</a>
           <p class="hero-note">Fresh flavours. Happy moments.</p>
         </div>
       </div>
@@ -57,21 +57,21 @@
       </div>
     </section>
 
-    <!-- ============ COLLECTION ============ -->
-    <section class="collection" id="flavours">
+    <!-- ============ MENU ============ -->
+    <section class="collection" id="menu">
       <div class="section-head">
-        <h2 class="reveal">Find Your Perfect Scoop</h2>
-        <p class="section-sub reveal">A flavour for every mood.</p>
+        <h2 class="reveal">Our Menu</h2>
+        <p class="section-sub reveal">A flavour for every mood. All prices in ₹.</p>
       </div>
 
-      <h3 class="category-title reveal">Classic Favourites</h3>
-      <div class="grid" id="grid-classic"></div>
+      <!-- Quick highlights -->
+      <div class="highlights reveal" id="highlights"></div>
 
-      <h3 class="category-title reveal">Fruity Delights</h3>
-      <div class="grid" id="grid-fruity"></div>
+      <!-- Category tabs -->
+      <div class="tabs" id="tabs" role="tablist" aria-label="Menu categories"></div>
 
-      <h3 class="category-title reveal">Signature Specials</h3>
-      <div class="grid" id="grid-signature"></div>
+      <!-- Active menu panel -->
+      <div class="menu-panel" id="menuPanel" role="tabpanel" aria-live="polite"></div>
     </section>
 
     <!-- ============ ABOUT ============ -->
@@ -93,7 +93,7 @@
       </div>
       <div class="about-text">
         <h2 class="reveal">Sweet Moments, Made Better.</h2>
-        <p class="reveal">At Berry Bliss, we believe happiness comes in scoops. From timeless classics to exciting new flavours, every scoop is made to bring a little sweetness to your day.</p>
+        <p class="reveal">At Berry Bliss, we believe happiness comes in scoops. From timeless ice cream flavours and Rajasthani matka kulfi to rich rabdi falooda and thick milkshakes, everything is made to bring a little sweetness to your day.</p>
       </div>
     </section>
   </main>
@@ -112,7 +112,7 @@
         <h4>Explore</h4>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#flavours">Our Flavours</a></li>
+          <li><a href="#menu">Our Menu</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
