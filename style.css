@@ -256,99 +256,36 @@ a { color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Hero banner ---------- */
-/* ---------- Hero banner ---------- */
-/* ---------- Hero banner (Full Screen) ---------- */
-.hero {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh; /* Accounts for mobile browser address bars dynamically */
-  overflow: hidden;
-}
-
-.hero-banner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  line-height: 0;
-}
-
-.hero-banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;      /* Fills the screen completely without stretching */
-  object-position: center center;
-  display: block;
-}
-
-/* Clickable area perfectly matched over the "Explore Menu" button in your image */
+.hero { position: relative; z-index: 1; width: 100%; }
+.hero-banner { position: relative; width: 100%; max-width: 1816px; margin: 0 auto; line-height: 0; }
+.hero-frame { position: relative; width: 100%; }
+.hero-frame img { width: 100%; height: auto; display: block; }
+/* Clickable area exactly over the button in the wide banner (1816x866) */
 .hero-cta {
-  position: absolute;
-  left: 9.47%;
-  top: 80.83%;
-  width: 20.1%;
-  height: 9.8%;
-  border-radius: 999px;
-  cursor: pointer;
+  position: absolute; left: 9.47%; top: 80.83%; width: 20.1%; height: 9.8%;
+  border-radius: 999px; cursor: pointer;
   transition: box-shadow .25s ease, transform .25s ease;
-  z-index: 2;
 }
+.hero-cta:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 28px rgba(126, 15, 58, .4); }
+.hero-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
-.hero-cta:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 14px 28px rgba(126, 15, 58, .4);
-}
-
-.hero-cta:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 3px;
-}
-
-/* Mobile responsiveness: Keeps the text & button side in focus on tall/narrow screens */
+/* ---------- PHONES: banner fills the whole screen, menu starts after scrolling ---------- */
 @media (max-width: 768px) {
-  .hero-banner img {
-    object-position: 28% center; 
+  .highlights { display: none; }                 /* removes the 4 "from ₹.." boxes */
+  .hero-banner { height: 100vh; height: 100svh; overflow: hidden; }
+  /* frame always covers the screen (like object-fit: cover) so the button area stays aligned */
+  .hero-frame {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: max(100vw, calc(100svh * 0.5628));
+    aspect-ratio: 941 / 1672; height: auto;
   }
+  .hero-frame picture { display: block; height: 100%; }
+  .hero-frame img { height: 100%; }
+  /* button position in the tall banner (941x1672) */
+  .hero-cta { left: 27.63%; top: 45.81%; width: 44.42%; height: 5.38%; }
+  .collection { margin-top: -28px; }
 }
-/* ==========================================================
-   Language picker + Hindi / Marathi fonts
-   ========================================================== */
-/* Devanagari font for the whole page (Poppins/Nunito have no Devanagari glyphs) */
-html[lang="hi"], html[lang="mr"] {
-  --font-head: "Noto Sans Devanagari", "Poppins", sans-serif;
-  --font-body: "Noto Sans Devanagari", "Nunito", sans-serif;
+@media (max-width: 640px) {
+  .cart-btn { margin-left: 14px; margin-right: 6px; }
+  .logo-text { font-size: .92rem; }
 }
-/* letter-spacing and tight line-height break Devanagari joins and matras */
-html[lang="hi"] *, html[lang="mr"] * { letter-spacing: normal !important; }
-html[lang="hi"] .logo-text, html[lang="mr"] .logo-text { line-height: 1.35; }
-html[lang="hi"] body, html[lang="mr"] body { line-height: 1.75; }
-
-/* Full-screen picker shown at the start of every visit */
-#lang-overlay {
-  position: fixed; inset: 0; z-index: 9999;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-  padding: 24px; text-align: center; color: #fff;
-  background: linear-gradient(160deg, var(--maroon), var(--raspberry) 70%, #E85D75);
-}
-#lang-overlay .lang-icon { width: 76px; height: 76px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.25)); }
-#lang-overlay h2 { font-family: "Poppins", sans-serif; font-weight: 700; font-size: clamp(1.5rem, 5vw, 2.2rem); }
-#lang-overlay p { font-family: "Poppins", "Noto Sans Devanagari", sans-serif; margin-bottom: 10px; opacity: .92; }
-#lang-overlay button {
-  width: min(260px, 80vw); padding: 14px 20px; border: 0; border-radius: 999px; cursor: pointer;
-  font: 700 1.15rem "Poppins", "Noto Sans Devanagari", sans-serif;
-  background: #fff; color: var(--maroon); box-shadow: 0 8px 20px rgba(0,0,0,.2);
-  transition: transform .2s ease, background .2s ease;
-}
-#lang-overlay button:hover, #lang-overlay button:focus-visible { background: #FFE9A8; transform: translateY(-2px); }
-html.lang-set #lang-overlay { display: none; }
-html:not(.lang-set) body { overflow: hidden; }
-
-/* Small language switcher in the navbar */
-.lang-select {
-  margin-left: 20px; padding: 7px 12px; border-radius: 999px; cursor: pointer;
-  font: 700 .9rem var(--font-head); color: var(--maroon);
-  background: #fff; border: 2px solid var(--strawberry);
-}
-@media (max-width: 640px) { .lang-select { margin-left: 8px; padding: 6px 8px; font-size: .82rem; } }
