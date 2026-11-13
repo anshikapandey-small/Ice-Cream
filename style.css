@@ -256,9 +256,30 @@ a { color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Hero banner ---------- */
-.hero { position: relative; z-index: 1; width: 100%; }
-.hero-banner { position: relative; width: 100%; max-width: 1816px; margin: 0 auto; line-height: 0; }
-.hero-banner img { width: 100%; height: auto; display: block; }
+/* ---------- Hero banner ---------- */
+.hero {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; /* accounts for mobile browser bars */
+}
+
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* fills the entire screen without stretching */
+  object-position: center; /* keeps the main subject centered */
+  display: block;
+}
 /* Clickable area exactly over the button in the image (measured from a 1816x866 banner) */
 .hero-cta {
   position: absolute; left: 9.47%; top: 80.83%; width: 20.1%; height: 9.8%;
