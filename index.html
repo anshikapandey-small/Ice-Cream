@@ -8,22 +8,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="preload" as="image" href="language-select.png" />
+  <link rel="stylesheet" href="style.css?v=9" />
   <noscript><style>#lang-overlay{display:none}html,body{overflow:auto!important}</style></noscript>
 </head>
 <body>
 
   <!-- ============ FIRST SCREEN: CHOOSE LANGUAGE (shown every time the page opens) ============ -->
-  <div id="lang-overlay" role="dialog" aria-modal="true" aria-labelledby="langTitle">
-    <div class="lang-card">
-      <svg class="lang-logo" viewBox="0 0 64 64" aria-hidden="true"><path d="M23 30h18L32 60z" fill="#F2B56B"/><path d="M27 36l5 12M34 36l-4 10" stroke="#D9923F" stroke-width="1.5"/><circle cx="32" cy="22" r="13" fill="#F6A6B5"/><circle cx="32" cy="12" r="5" fill="#E85D75"/><ellipse cx="26" cy="19" rx="4" ry="2.5" fill="#fff" opacity=".5"/></svg>
-      <p class="lang-shop">Shree Krishna Ice Cream<span>श्री कृष्ण आइसक्रीम</span></p>
-      <h2 id="langTitle">Choose your language<span>भाषा चुनें · भाषा निवडा</span></h2>
-      <div class="lang-btns">
-        <button type="button" data-lang="en">English</button>
-        <button type="button" data-lang="hi">हिन्दी</button>
-        <button type="button" data-lang="mr">मराठी</button>
-      </div>
+  <div id="lang-overlay" role="dialog" aria-modal="true" aria-label="Choose your language · भाषा चुनें · भाषा निवडा">
+    <div class="lang-frame">
+      <img src="language-select.png" alt="Shree Krishna Ice Cream — श्री कृष्ण आइसक्रीम. Choose your language." width="941" height="1672" fetchpriority="high" />
+      <!-- invisible buttons placed exactly over the three buttons in the image -->
+      <button type="button" class="lang-pick en" data-lang="en" aria-label="English"></button>
+      <button type="button" class="lang-pick hi" data-lang="hi" aria-label="हिन्दी"></button>
+      <button type="button" class="lang-pick mr" data-lang="mr" aria-label="मराठी"></button>
     </div>
   </div>
 
@@ -38,7 +36,7 @@
         <li><a href="#home" class="active" data-t="nav_home">Home</a></li>
         <li><a href="#menu" data-t="nav_menu">Our Menu</a></li>
         <li><a href="#about" data-t="nav_about">About Us</a></li>
-        <li><a href="#contact" data-t="nav_contact">Contact</a></li>
+        <li><a href="#footer" data-t="nav_contact">Contact</a></li>
       </ul>
       <div class="lang">
         <select id="langSelect" data-ta="aria-label:langLabel" aria-label="Language">
@@ -111,7 +109,7 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="footer" id="contact">
+  <footer class="footer" id="footer">
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#home" class="logo">
@@ -126,27 +124,24 @@
           <li><a href="#home" data-t="nav_home">Home</a></li>
           <li><a href="#menu" data-t="nav_menu">Our Menu</a></li>
           <li><a href="#about" data-t="nav_about">About Us</a></li>
-          <li><a href="#contact" data-t="nav_contact">Contact</a></li>
+          <li><a href="#footer" data-t="nav_contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4 data-t="visit">Visit Us</h4>
-        <p>123 Strawberry Lane<br/>Sundae District, BB 4021</p>
+        <address><a href="https://www.google.com/maps/search/?api=1&query=SBI+Bank+100+Feet+Road+Virar+West" target="_blank" rel="noopener" data-t="address">Opposite SBI Bank, 100 Feet Road,
+Virar West</a></address>
       </div>
       <div class="footer-col">
         <h4 data-t="touch">Get in Touch</h4>
-        <p>hello@berrybliss.example<br/>+1 (555) 010-2030</p>
-        <a class="instagram" href="#" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
-          @berrybliss
-        </a>
+        <p><a class="phone" href="tel:+919960120978">+91 99601 20978</a></p>
       </div>
     </div>
     <p class="copyright">© <span id="year"></span> <span data-t="rights">Shree Krishna Ice Cream. All rights reserved.</span></p>
   </footer>
 
   <!-- i18n.js MUST come before script.js -->
-  <script src="i18n.js?v=7"></script>
-  <script src="script.js?v=7"></script>
+  <script src="i18n.js?v=9"></script>
+  <script src="script.js?v=9"></script>
 </body>
 </html>
