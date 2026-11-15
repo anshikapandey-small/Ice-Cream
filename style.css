@@ -168,7 +168,7 @@ a { color: inherit; }
 .footer { background: var(--choco); color: #F6E3E3; position: relative; z-index: 1; }
 .footer-grid {
   max-width: 1120px; margin: 0 auto; padding: 64px 24px 40px;
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px;
+  display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1fr; gap: 36px;
 }
 .footer .logo { color: #fff; }
 .footer-tag { margin-top: 12px; color: #E9BFC4; font-weight: 600; }
@@ -321,32 +321,36 @@ a { color: inherit; }
   letter-spacing: 1.5px; font-size: .95rem; margin-bottom: 6px;
 }
 
-/* ---------- First screen: choose a language ---------- */
+/* ---------- First screen: choose a language (uses language-select.png) ---------- */
 html:not(.lang-set), html:not(.lang-set) body { overflow: hidden; }
 #lang-overlay {
-  position: fixed; inset: 0; z-index: 1000; overflow: auto;
-  display: grid; place-items: center; padding: 24px;
-  background: radial-gradient(circle at 50% 18%, #FFF6F9 0, #FDE0EA 55%, #F9C9D9 100%);
+  position: fixed; inset: 0; z-index: 1000; overflow: hidden;
+  display: flex; justify-content: center; background: #FDE3EC;
 }
 .lang-set #lang-overlay { display: none; }
-.lang-card {
-  width: min(100%, 420px); text-align: center; background: #fff;
-  border-radius: 32px; padding: 34px 26px 30px;
-  box-shadow: 0 24px 60px rgba(126, 15, 58, .22);
+.lang-frame { position: relative; height: 100%; aspect-ratio: 941 / 1672; }
+.lang-frame img { width: 100%; height: 100%; display: block; }
+/* invisible buttons exactly over English / Hindi / Marathi in the image (941x1672) */
+.lang-pick {
+  position: absolute; left: 12.43%; width: 75.3%;
+  background: transparent; border: 0; border-radius: 999px; cursor: pointer;
+  transition: box-shadow .2s ease, background .2s ease;
 }
-.lang-logo { width: 70px; height: 70px; margin: 0 auto 12px; }
-.lang-shop { font-family: var(--font-head); font-weight: 700; font-size: 1.25rem; line-height: 1.35; color: var(--maroon); }
-.lang-shop span { display: block; font-size: 1.1rem; }
-.lang-card h2 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 600; margin: 20px 0 20px; color: var(--ink); }
-.lang-card h2 span { display: block; margin-top: 2px; font-size: .95rem; color: #8E5C6E; }
-.lang-btns { display: grid; gap: 12px; }
-.lang-btns button {
-  font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; color: var(--ink);
-  background: #fff; border: 2px solid var(--strawberry); border-radius: 999px;
-  padding: 15px 20px; cursor: pointer;
-  transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+.lang-pick.en { top: 67.44%; height: 8.31%; }
+.lang-pick.hi { top: 76.97%; height: 6.82%; }
+.lang-pick.mr { top: 84.69%; height: 6.82%; }
+.lang-pick:hover, .lang-pick:focus-visible { box-shadow: 0 0 0 4px rgba(126, 15, 58, .3), 0 10px 22px rgba(126, 15, 58, .25); outline: none; }
+.lang-pick:active { background: rgba(126, 15, 58, .12); }
+/* phones: image covers the whole screen */
+@media (max-width: 768px) {
+  .lang-frame {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: max(100vw, calc(100svh * 0.5628)); height: auto;
+  }
 }
-.lang-btns button:hover, .lang-btns button:focus-visible {
-  color: #fff; background: var(--maroon); border-color: var(--maroon);
-  transform: translateY(-2px); box-shadow: 0 10px 22px rgba(126, 15, 58, .3);
-}
+
+/* ---------- Footer contact details ---------- */
+.footer-col address { font-style: normal; color: #E9BFC4; }
+.footer-col address a { white-space: pre-line; display: inline-block; }
+.footer-col .phone { color: #fff; font-weight: 700; font-size: 1.05rem; }
+.footer-col .phone:hover { color: var(--strawberry); }
