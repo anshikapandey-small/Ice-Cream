@@ -7,25 +7,47 @@
   <meta name="description" content="Shree Krishna Ice Cream — ice cream, matka kulfi, falooda, rabdi, milkshakes and family packs. See our full menu." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Kaushan+Script&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=7" />
+  <noscript><style>#lang-overlay{display:none}html,body{overflow:auto!important}</style></noscript>
 </head>
 <body>
 
-    <!-- ============ NAVBAR ============ -->
+  <!-- ============ FIRST SCREEN: CHOOSE LANGUAGE (shown every time the page opens) ============ -->
+  <div id="lang-overlay" role="dialog" aria-modal="true" aria-labelledby="langTitle">
+    <div class="lang-card">
+      <svg class="lang-logo" viewBox="0 0 64 64" aria-hidden="true"><path d="M23 30h18L32 60z" fill="#F2B56B"/><path d="M27 36l5 12M34 36l-4 10" stroke="#D9923F" stroke-width="1.5"/><circle cx="32" cy="22" r="13" fill="#F6A6B5"/><circle cx="32" cy="12" r="5" fill="#E85D75"/><ellipse cx="26" cy="19" rx="4" ry="2.5" fill="#fff" opacity=".5"/></svg>
+      <p class="lang-shop">Shree Krishna Ice Cream<span>श्री कृष्ण आइसक्रीम</span></p>
+      <h2 id="langTitle">Choose your language<span>भाषा चुनें · भाषा निवडा</span></h2>
+      <div class="lang-btns">
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="hi">हिन्दी</button>
+        <button type="button" data-lang="mr">मराठी</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
   <header class="navbar" id="navbar">
     <nav class="nav-inner" aria-label="Main navigation">
-      <a href="#home" class="logo" aria-label="Shree Krishna Ice Cream home">
+      <a href="#home" class="logo" aria-label="Shree Krishna Ice Cream">
         <svg class="logo-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M23 30h18L32 60z" fill="#F2B56B"/><path d="M27 36l5 12M34 36l-4 10" stroke="#D9923F" stroke-width="1.5"/><circle cx="32" cy="22" r="13" fill="#F6A6B5"/><circle cx="32" cy="12" r="5" fill="#E85D75"/><ellipse cx="26" cy="19" rx="4" ry="2.5" fill="#fff" opacity=".5"/></svg>
-        <span class="logo-text">SHREE KRISHNA<small>ICE CREAM</small></span>
+        <span class="logo-text"><span data-t="brand1">SHREE KRISHNA</span><small data-t="brand2">ICE CREAM</small></span>
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#menu">Our Menu</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#home" class="active" data-t="nav_home">Home</a></li>
+        <li><a href="#menu" data-t="nav_menu">Our Menu</a></li>
+        <li><a href="#about" data-t="nav_about">About Us</a></li>
+        <li><a href="#contact" data-t="nav_contact">Contact</a></li>
       </ul>
-      <a href="#menu" class="cart-btn" aria-label="View our menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6"/></svg></a>
+      <div class="lang">
+        <select id="langSelect" data-ta="aria-label:langLabel" aria-label="Language">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="mr">मराठी</option>
+        </select>
+      </div>
+      <a href="#menu" class="cart-btn" data-ta="aria-label:viewMenu" aria-label="View our menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6"/></svg></a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -33,30 +55,28 @@
   </header>
 
   <main>
-    <!-- ============ HERO (banner image) ============ -->
+    <!-- ============ HERO (vertical banner image) ============ -->
     <section class="hero" id="home">
-      <h1 class="sr-only">Shree Krishna Ice Cream — A Little Scoop of Happiness</h1>
+      <h1 class="sr-only"><span data-t="brand1">SHREE KRISHNA</span> <span data-t="brand2">ICE CREAM</span></h1>
       <div class="hero-banner">
         <div class="hero-frame">
-          <picture>
-            <!-- phones get the tall banner, bigger screens get the wide one -->
-            <source media="(max-width: 768px)" srcset="hero-mobile.png" width="941" height="1672" />
-            <img src="A_Little_Scoop_of_Happiness.png" alt="Shree Krishna Ice Cream. A little scoop of happiness. Discover delicious ice creams, kulfis, faloodas and milkshakes." width="1816" height="866" fetchpriority="high" />
-          </picture>
-          <!-- invisible clickable area placed exactly over the "Explore Menu" button in the image -->
-          <a href="#menu" class="hero-cta" aria-label="Explore Menu"></a>
+          <img src="hero-mobile.png" data-ta="alt:heroAlt" alt="Shree Krishna Ice Cream. A little scoop of happiness. Discover delicious ice creams, kulfis, faloodas and milkshakes." width="941" height="1672" fetchpriority="high" />
+          <!-- invisible clickable area over the "Explore Menu" button in the image -->
+          <a href="#menu" class="hero-cta" data-ta="aria-label:exploreMenu" aria-label="Explore Menu"></a>
         </div>
+        <a href="#menu" class="scroll-cue" data-ta="aria-label:exploreMenu" aria-label="Explore Menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>
       </div>
     </section>
 
     <!-- ============ MENU ============ -->
     <section class="collection" id="menu">
       <div class="section-head">
-        <h2 class="reveal">Our Menu</h2>
-        <p class="section-sub reveal">A flavour for every mood. All prices in ₹.</p>
+        <p class="menu-shop reveal"><span data-t="brand1">SHREE KRISHNA</span> <span data-t="brand2">ICE CREAM</span></p>
+        <h2 class="reveal" data-t="menuH">Our Menu</h2>
+        <p class="section-sub reveal" data-t="menuSub">A flavour for every mood. All prices in ₹.</p>
       </div>
 
-      <!-- Quick highlights -->
+      <!-- Quick highlights (hidden on phones) -->
       <div class="highlights reveal" id="highlights"></div>
 
       <!-- Category tabs -->
@@ -84,8 +104,8 @@
         </svg>
       </div>
       <div class="about-text">
-        <h2 class="reveal">Sweet Moments, Made Better.</h2>
-        <p class="reveal">At Shree Krishna Ice Cream, we believe happiness comes in scoops. From timeless ice cream flavours and Rajasthani matka kulfi to rich rabdi falooda and thick milkshakes, everything is made to bring a little sweetness to your day.</p>
+        <h2 class="reveal" data-t="aboutH">Sweet Moments, Made Better.</h2>
+        <p class="reveal" data-t="aboutP">At Shree Krishna Ice Cream, we believe happiness comes in scoops. From timeless ice cream flavours and Rajasthani matka kulfi to rich rabdi falooda and thick milkshakes, everything is made to bring a little sweetness to your day.</p>
       </div>
     </section>
   </main>
@@ -96,25 +116,25 @@
       <div class="footer-brand">
         <a href="#home" class="logo">
           <svg class="logo-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M23 30h18L32 60z" fill="#F2B56B"/><path d="M27 36l5 12M34 36l-4 10" stroke="#D9923F" stroke-width="1.5"/><circle cx="32" cy="22" r="13" fill="#F6A6B5"/><circle cx="32" cy="12" r="5" fill="#E85D75"/><ellipse cx="26" cy="19" rx="4" ry="2.5" fill="#fff" opacity=".5"/></svg>
-          <span class="logo-text">SHREE KRISHNA<small>ICE CREAM</small></span>
+          <span class="logo-text"><span data-t="brand1">SHREE KRISHNA</span><small data-t="brand2">ICE CREAM</small></span>
         </a>
-        <p class="footer-tag">Making life a little sweeter.</p>
+        <p class="footer-tag" data-t="footerTag">Making life a little sweeter.</p>
       </div>
       <div class="footer-col">
-        <h4>Explore</h4>
+        <h4 data-t="explore">Explore</h4>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#menu">Our Menu</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#home" data-t="nav_home">Home</a></li>
+          <li><a href="#menu" data-t="nav_menu">Our Menu</a></li>
+          <li><a href="#about" data-t="nav_about">About Us</a></li>
+          <li><a href="#contact" data-t="nav_contact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Visit Us</h4>
+        <h4 data-t="visit">Visit Us</h4>
         <p>123 Strawberry Lane<br/>Sundae District, BB 4021</p>
       </div>
       <div class="footer-col">
-        <h4>Get in Touch</h4>
+        <h4 data-t="touch">Get in Touch</h4>
         <p>hello@berrybliss.example<br/>+1 (555) 010-2030</p>
         <a class="instagram" href="#" aria-label="Instagram">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -122,8 +142,11 @@
         </a>
       </div>
     </div>
-    <p class="copyright">© <span id="year"></span> Shree Krishna Ice Cream. All rights reserved.</p>
+    <p class="copyright">© <span id="year"></span> <span data-t="rights">Shree Krishna Ice Cream. All rights reserved.</span></p>
   </footer>
-  <script src="script.js"></script>
+
+  <!-- i18n.js MUST come before script.js -->
+  <script src="i18n.js?v=7"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
