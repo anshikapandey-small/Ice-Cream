@@ -1,8 +1,8 @@
 /* ==========================================================
-   Berry Bliss — script.js
+   Shree Krishna — script.js
    1. Full menu data (all 8 sections) + tabbed rendering
    2. Navbar, mobile menu, reveal-on-scroll
-   (hero is now a banner image)
+   (needs i18n.js loaded first: it provides the I18N translations)
    ========================================================== */
 "use strict";
 
@@ -143,8 +143,18 @@ highlightsEl.addEventListener("click", (e) => {
   const b = e.target.closest(".hl-card");
   if (b) showCategory(b.dataset.go, true);
 });
-document.addEventListener("langchange", renderLabels);   // re-draw menu when language changes
+document.addEventListener("langchange", renderLabels);   // re-draw the menu when the language changes
 renderLabels();
+
+/* After a language is chosen on the first screen, take the visitor straight to the menu */
+document.querySelectorAll("#lang-overlay button[data-lang]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    setTimeout(() => {
+      const m = document.getElementById("menu");
+      if (m) m.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  });
+});
 
 /* ---------- 2. NAVBAR + SCROLL REVEALS ---------- */
 
@@ -163,8 +173,6 @@ navLinks.addEventListener("click", (e) => {
 window.addEventListener("scroll", () => {
   navbar.classList.toggle("scrolled", window.scrollY > 12);
 }, { passive: true });
-
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const io = new IntersectionObserver((entries) => {
   entries.forEach((en) => {
