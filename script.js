@@ -6,6 +6,14 @@
    ========================================================== */
 "use strict";
 
+/* ---------- SHOP DETAILS (footer) — edit the address here ----------
+   The phone number is in index.html (search for 99601). */
+UI.address = {
+  en: "Opposite SBI Bank, 100 Feet Road,\nVirar West",
+  hi: "एसबीआई बैंक के सामने, 100 फीट रोड,\nविरार पश्चिम",
+  mr: "एसबीआय बँकेसमोर, 100 फूट रोड,\nविरार पश्चिम"
+};
+
 /* ---------- 1. MENU DATA ----------
    Item format:  [name, half, full]   (two-price sections)
                  [name, price]        (single-price sections)
